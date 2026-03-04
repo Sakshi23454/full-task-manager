@@ -1,5 +1,7 @@
+const { isMongoId, isMobilePhone } = require("validator")
 const Task = require("../models/Task")
 const User = require("../models/User")
+const { default: isEmail } = require("validator/lib/isEmail")
 
 exports.getAllEmployees = async (req, res) => {
     try {
@@ -15,6 +17,9 @@ exports.getAllEmployees = async (req, res) => {
 exports.updateEmployee = async (req, res) => {
     try {
         const { eid } = req.params
+        if (!isMongoId(eid)) {
+            return res.status(400).json({ message: "invalid id" })
+        }
         let obj = {}
         const { name, email, mobile } = req.body
 
@@ -22,9 +27,15 @@ exports.updateEmployee = async (req, res) => {
             obj = { ...obj, name: name }
         }
         if (email) {
+            if (!isEmail(email)) {
+                return res.status(400).json({ message: "invalid email" })
+            }
             obj = { ...obj, email }
         }
         if (mobile) {
+            if (!isMobilePhone(mobile, "en-IN")) {
+                return res.status(400).json({ message: "invalid mobile" })
+            }
             obj = { ...obj, mobile }
         }
 
@@ -103,7 +114,8 @@ exports.createTask = async (req, res) => {
 
 exports.readTask = async (req, res) => {
     try {
-        const result = await Task.find()
+        // foreign key data - populate        (left join)
+        const result = await Task.find().populate("employee", "_id name mobile email")
         res.status(200).json({ message: "read task success", result })
     } catch (error) {
         console.log(error)

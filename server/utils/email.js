@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer")
 
-exports.sendEmail = ({ email, subject, message }) => new Promise((resolve, rejecct) => {
+exports.sendEmail = ({ email, subject, message }) => new Promise((resolve, reject) => {
     try {
         const transport = nodemailer.createTransport({
             service: "gmail",
@@ -16,6 +16,6 @@ exports.sendEmail = ({ email, subject, message }) => new Promise((resolve, rejec
         resolve("email send success")
     } catch (error) {
         console.log(error)
-        rejecct("unable to send email")
+        reject("unable to send email")
     }
 })
