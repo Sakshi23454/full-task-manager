@@ -1,10 +1,26 @@
 "use client"
+import { useSignoutMutation } from '@/redux/apis/auth.api'
 import { useAppSelector } from '@/redux/store'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
+import { toast } from 'react-toastify'
 
 const AdminNavbar = () => {
     const { admin } = useAppSelector(state => state.auth)
+    const [logout] = useSignoutMutation()
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap()
+            toast.success("logout success")
+            router.refresh()
+        } catch (error) {
+            console.log(error)
+            toast.error("unable to logout")
+        }
+    }
 
     return <>
         <nav className="navbar navbar-expand-lg bg-danger navbar-dark">
@@ -27,7 +43,7 @@ const AdminNavbar = () => {
                         <div className="dropdown-menu">
                             <li className='dropdown-item'><Link className='nav-link' href="/admin/profile">Profile</Link></li>
                             <li className='dropdown-item'><Link className='nav-link' href="/admin/setting">Setting</Link></li>
-                            <li className='dropdown-item'><button className='btn btn-link text-danger'>Logout</button></li>
+                            <li className='dropdown-item'><button onClick={handleLogout} className='btn btn-link text-danger'>Logout</button></li>
                         </div>
                     </div>
                 }

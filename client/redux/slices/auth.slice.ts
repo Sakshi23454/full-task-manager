@@ -26,6 +26,9 @@ const authSlice = createSlice({
             // payload - signin response
             state.admin = payload.result
         })
+        .addMatcher(authApi.endpoints.signout.matchFulfilled, (state, { payload }) => {
+            state.admin = null
+        })
 })
 
 // export const { invalidate } = authSlice.actions
