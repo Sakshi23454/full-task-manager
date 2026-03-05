@@ -43,7 +43,7 @@ const AdminTodo = () => {
 
         } catch (error) {
             console.log(error);
-            toast.error(" unabel to to create task")
+            toast.error(" unabel to create task")
         }
     }
 
