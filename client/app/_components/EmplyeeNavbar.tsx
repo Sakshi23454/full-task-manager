@@ -4,7 +4,7 @@ import React from 'react'
 const EmployeeNavbar = () => {
     return <>
         <nav className="navbar navbar-expand-lg bg-primary navbar-dark">
-            <div className="container-fluid">
+            <div className="container">
                 <a className="navbar-brand" href="#">Employee Panel</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
                     <span className="navbar-toggler-icon"></span>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetEmployeesQuery, useTodoCreateMutation, useTodoReadQuery, useTodoUpdateMutation } from '@/redux/apis/admin.api'
-import { TODO_CREATE_REQUEST } from '@/types/Admin'
+import { TODO_CREATE_REQUEST, TODO_UPDATE_REQUEST } from '@/types/Admin'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import React from 'react'
@@ -47,6 +47,16 @@ const AdminTodo = () => {
         }
     }
 
+    const handleUpdateTodo = async (data: TODO_UPDATE_REQUEST) => {
+        try {
+            await updateTodo(data).unwrap()
+            toast.success("todo update success")
+        } catch (error) {
+            console.log(error)
+            toast.error("unable to update todo")
+        }
+    }
+
     const handleClassess = (key: keyof TODO_CREATE_REQUEST) => clsx({
         "form-control my-2": true,
         "is-invalid": errors && errors[key],
@@ -79,7 +89,7 @@ const AdminTodo = () => {
                                 <div>
                                     <select {...register("priority")} className={handleClassess("priority")}>
                                         <option value="">choose option</option>
-                                        <option value="heigh">heigh</option>
+                                        <option value="high">high</option>
                                         <option value="medium">medium</option>
                                         <option value="low">low</option>
                                     </select>

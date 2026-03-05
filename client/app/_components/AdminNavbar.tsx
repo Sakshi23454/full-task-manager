@@ -1,10 +1,14 @@
+"use client"
+import { useAppSelector } from '@/redux/store'
 import Link from 'next/link'
 import React from 'react'
 
 const AdminNavbar = () => {
+    const { admin } = useAppSelector(state => state.auth)
+
     return <>
         <nav className="navbar navbar-expand-lg bg-danger navbar-dark">
-            <div className="container-fluid">
+            <div className="container">
                 <a className="navbar-brand" href="#">Admin Panel</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
                     <span className="navbar-toggler-icon"></span>
@@ -16,6 +20,17 @@ const AdminNavbar = () => {
                         <Link className="nav-link" href="/admin/todo">Todos</Link>
                     </div>
                 </div>
+
+                {
+                    admin && <div className="dropdown" data-bs-toggle="dropdown">
+                        <button className='btn btn-light'>welcome {admin.name}</button>
+                        <div className="dropdown-menu">
+                            <li className='dropdown-item'><Link className='nav-link' href="/admin/profile">Profile</Link></li>
+                            <li className='dropdown-item'><Link className='nav-link' href="/admin/setting">Setting</Link></li>
+                            <li className='dropdown-item'><button className='btn btn-link text-danger'>Logout</button></li>
+                        </div>
+                    </div>
+                }
             </div>
         </nav>
     </>
