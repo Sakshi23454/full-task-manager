@@ -126,8 +126,8 @@ const AdminTodo = () => {
                             <td>
                                 {
                                     item.complete
-                                        ? <button onClick={e => handleUpdateTodo({ _id: item._id, complete: false })} type='button' className='btn btn-success btn-sm'>Complete</button>
-                                        : <button onClick={e => handleUpdateTodo({ _id: item._id, complete: true })} type='button' className='btn btn-danger btn-sm'>In-Complete</button>
+                                    // ? <button onClick={e => handleUpdateTodo({ _id: item._id, complete: false })} type='button' className='btn btn-success btn-sm'>Complete</button>
+                                    // : <button onClick={e => handleUpdateTodo({ _id: item._id, complete: true })} type='button' className='btn btn-danger btn-sm'>In-Complete</button>
                                 }
                             </td>
                         </tr>
