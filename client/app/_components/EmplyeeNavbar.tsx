@@ -1,7 +1,26 @@
+"use client"
+import { useSignoutMutation } from '@/redux/apis/auth.api'
+import { useAppSelector } from '@/redux/store'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 const EmployeeNavbar = () => {
+    const { admin } = useAppSelector(state => state.auth)
+    const [logout] = useSignoutMutation()
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap()
+            toast.success("logout success")
+            router.refresh()
+        } catch (error) {
+            console.log(error)
+            toast.error("unable to logout")
+        }
+    }
+
     return <>
         <nav className="navbar navbar-expand-lg bg-primary navbar-dark">
             <div className="container">
@@ -11,11 +30,21 @@ const EmployeeNavbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <Link className="nav-link active" href="#">Dashboard</Link>
-                        <Link className="nav-link" href="#">ghj</Link>
-                        <Link className="nav-link" href="#">ghj</Link>
+                        <Link className="nav-link active" href="/employee">Dashboard</Link>
+                        <Link className="nav-link" href="/employee/profile">Profile</Link>
                     </div>
                 </div>
+
+                {
+                    admin && <div className="dropdown" >
+                        <button className='btn btn-light' data-bs-toggle="dropdown">welcome {admin.name}</button>
+                        <ul className="dropdown-menu">
+                            <li><Link className='dropdown-item' href="/admin/profile">Profile</Link></li>
+                            <li><Link className='dropdown-item' href="/admin/setting">Setting</Link></li>
+                            <li className='dropdown-item'><button onClick={handleLogout} className='btn btn-link text-danger'>Logout</button></li>
+                        </ul>
+                    </div>
+                }
             </div>
         </nav>
     </>

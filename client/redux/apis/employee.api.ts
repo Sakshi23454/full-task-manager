@@ -12,7 +12,7 @@ export const employeeApi = createApi({
     tagTypes: ["todo", "profile"],
     endpoints: (builder) => {
         return {
-            getTodos: builder.query<GET_TODO_RESPONSE, GET_TODO_REQUEST>({
+            getTodos: builder.query<GET_TODO_RESPONSE, void>({
                 query: () => {
                     return {
                         url: "/todos",
