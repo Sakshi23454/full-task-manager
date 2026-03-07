@@ -42,8 +42,9 @@ exports.adminProtect = async (req, res, next) => {
 
 exports.protect = (role) => async (req, res, next) => {
     try {
+        const cookieName = role === "admin" ? "ADMIN" : "EMPLOYEE"
         // check for cookie
-        const TOKEN = req.cookies.TOKEN
+        const TOKEN = req.cookies[cookieName]
         if (!TOKEN) {
             return res.status(401).json({
                 message: process.env.NODE_ENV === PRODUCTION
