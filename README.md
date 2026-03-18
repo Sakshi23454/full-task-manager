@@ -5,6 +5,7 @@
 A full-stack **Task Manager Application** designed to help users efficiently organize, track, and manage their daily tasks in a clean and modern interface. The application focuses on performance, scalability, and a smooth user experience with a well-structured frontend and a robust backend system.
 
 
+---
 
 
 ## 🚀 Key Features
